@@ -38,6 +38,9 @@ scenario;name;var_name;carrier;region;tech;type;var_value
 2050-100-el_eff_mod;B-ch4-gt;flow_in_ch4;ch4;B;gt;conversion;12203.531202718941
 2050-100-el_eff_mod;BB-ch4-gt;flow_in_ch4;ch4;BB;gt;conversion;35626.979108458145
 2050-100-el_eff_mod;B-ch4-gt;flow_out_electricity;ch4;B;gt;conversion;5247.518417169144
+2050-100-el_eff_mod;B-ch4-gt;flow_out_electricity;ch4;B;import;conversion;5247.518417169144
+2050-100-el_eff_mod;B-biomass;flow_out_electricity;ch4;B;import;conversion;5247.518417169144
+2050-100-el_eff_mod;B-biomass;flow_out_electricity;ch4;B;export;conversion;6000.518417169144
 2050-100-el_eff_mod;BB-ch4-gt;flow_out_electricity;ch4;BB;gt;conversion;15319.601016637002
 2050-100-el_eff_mod;B-ch4-gt;invest_costs_out_electricity;ch4;B;gt;conversion;89708462.46746637
 2050-100-el_eff_mod;BB-ch4-gt;invest_costs_out_electricity;ch4;BB;gt;conversion;261894812.66440725
@@ -128,6 +131,7 @@ scenario;name;var_name;carrier;region;tech;type;var_value
 2050-100-el_eff_mod;B-electricity-pth;summed_variable_costs_out_heat_central;electricity;B;pth;conversion;48.10636896248161
 2050-100-el_eff_mod;BB-electricity-pth;summed_variable_costs_out_heat_central;electricity;BB;pth;conversion;580.112601669517
 2050-100-el_eff_mod;B-electricity-shortage;flow_out_electricity;electricity;B;shortage;shortage;0.0
+2050-100-el_eff_mod;BB-electricity-shortage;flow_out_electricity;electricity;BB;shortage;shortage;0.0
 2050-100-el_eff_mod;BB-electricity-shortage;flow_out_electricity;electricity;BB;shortage;shortage;0.0
 2050-100-el_eff_mod;B-electricity-shortage;summed_variable_costs_out_electricity;electricity;B;shortage;shortage;0.0
 2050-100-el_eff_mod;BB-electricity-shortage;summed_variable_costs_out_electricity;electricity;BB;shortage;shortage;0.0
