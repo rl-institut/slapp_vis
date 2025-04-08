@@ -1,0 +1,6 @@
+from;BB-electricity-electrolyzer;BB-h2;BB-h2;BB-h2;BB-h2;BB-h2;BB-h2;BB-h2-cavern;BB-h2-import;BB-h2-shortage
+to;BB-h2;BB-h2-bpchp;BB-h2-cavern;BB-h2-demand;BB-h2-excess;BB-h2-export;BB-h2-gt;BB-h2;BB-h2;BB-h2
+type;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;692.6917808219177;0.0;0.0;692.6917808219177;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 01:00:00;692.6917808219177;0.0;0.0;692.6917808219177;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 02:00:00;692.6917808219177;0.0;0.0;692.6917808219177;0.0;0.0;0.0;0.0;0.0;0.0

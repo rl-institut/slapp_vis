@@ -1,0 +1,6 @@
+from;B-ch4-import;BB-ch4-import;B-ch4-shortage;BB-ch4-shortage;B-electricity-import;BB-electricity-import;B-electricity-shortage;BB-electricity-shortage;B-h2-import;BB-h2-import;B-h2-shortage;BB-h2-shortage;B-heat_central-shortage;BB-heat_central-shortage;B-heat_decentral-shortage;BB-heat_decentral-shortage
+to;B-ch4;BB-ch4;B-ch4;BB-ch4;B-electricity;BB-electricity;B-electricity;BB-electricity;B-h2;BB-h2;B-h2;BB-h2;B-heat_central;BB-heat_central;B-heat_decentral;BB-heat_decentral
+type;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;0.0;0.0;5047.037629192328;12619.536101239235;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 01:00:00;0.0;0.0;5089.946877490026;13032.49210703972;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 02:00:00;0.0;0.0;5089.946877490026;13032.49210703972;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0

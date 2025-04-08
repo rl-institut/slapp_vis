@@ -1,0 +1,11 @@
+name;region;type;balanced
+BB-ch4;BB;bus;True
+BB-electricity;BB;bus;True
+BB-h2;BB;bus;True
+BB-heat_central;BB;bus;True
+BB-heat_decentral;BB;bus;True
+B-ch4;B;bus;True
+B-electricity;B;bus;True
+B-h2;B;bus;True
+B-heat_central;B;bus;True
+B-heat_decentral;B;bus;True

@@ -1,0 +1,3 @@
+name;amount;bus;carrier;profile;region;tech;type
+B-heat_decentral-demand;7912000.0;B-heat_decentral;heat_decentral;B-heat_decentral-demand-profile;B;demand;load
+BB-heat_decentral-demand;15500000.0;BB-heat_decentral;heat_decentral;BB-heat_decentral-demand-profile;BB;demand;load

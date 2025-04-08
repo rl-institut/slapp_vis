@@ -1,0 +1,6 @@
+from;BB-ch4-boiler_small;BB-electricity-heatpump_small;BB-heat_decentral;BB-heat_decentral;BB-heat_decentral;BB-heat_decentral-shortage;BB-heat_decentral-storage
+to;BB-heat_decentral;BB-heat_decentral;BB-heat_decentral-demand;BB-heat_decentral-excess;BB-heat_decentral-storage;BB-heat_decentral;BB-heat_decentral
+type;flow;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;316.19898846952657;1549.3750435006802;1859.6079764465726;0.0;5.966055523634217;0.0;0.0
+2017-01-01 01:00:00;324.8641496155592;1591.8343331162403;1922.5392510894374;0.0;0.0;0.0;5.840768357637899
+2017-01-01 02:00:00;324.8641496155592;1591.8343331162403;1916.6984827317995;0.0;0.0;0.0;0.0

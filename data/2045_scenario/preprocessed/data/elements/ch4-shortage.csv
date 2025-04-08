@@ -1,0 +1,3 @@
+name;bus;capacity;carrier;marginal_cost;output_parameters;region;tech;type
+B-ch4-shortage;B-ch4;1000000000;ch4;208.7;{};B;shortage;shortage
+BB-ch4-shortage;BB-ch4;1000000000;ch4;208.7;{};BB;shortage;shortage

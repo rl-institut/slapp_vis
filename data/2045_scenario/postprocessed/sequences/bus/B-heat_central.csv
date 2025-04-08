@@ -1,0 +1,6 @@
+from;B-ch4-boiler_large;B-ch4-bpchp;B-electricity-heatpump_large;B-electricity-pth;B-h2-bpchp;B-heat_central;B-heat_central;B-heat_central;B-heat_central-shortage;B-heat_central-storage
+to;B-heat_central;B-heat_central;B-heat_central;B-heat_central;B-heat_central;B-heat_central-demand;B-heat_central-excess;B-heat_central-storage;B-heat_central;B-heat_central
+type;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;568.5919539540841;0.0;392.328448228318;0.0;0.0;971.5289317659838;0.0;0.0;0.0;10.608529583581685
+2017-01-01 01:00:00;603.4516416080563;0.0;392.328448228318;24.053184481240805;0.0;1008.785491290998;0.0;11.047783026617354;0.0;0.0
+2017-01-01 02:00:00;603.4516416080563;0.0;392.328448228318;24.053184481240805;0.0;1019.8332743176152;0.0;0.0;0.0;0.0

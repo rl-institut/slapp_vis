@@ -1,0 +1,3 @@
+name;capacity;capacity_cost;capacity_potential;carrier;carrier_cost;efficiency;expandable;from_bus;marginal_cost;output_parameters;region;tech;to_bus;type
+B-electricity-electrolyzer;0;48336.11829762904;;electricity;0;0.75;True;B-electricity;1e-06;{};B;electrolyzer;B-h2;conversion
+BB-electricity-electrolyzer;0;48336.11829762904;;electricity;0;0.75;True;BB-electricity;1e-06;{};BB;electrolyzer;BB-h2;conversion

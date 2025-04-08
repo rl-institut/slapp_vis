@@ -1,0 +1,3 @@
+name;amount;bus;carrier;profile;region;tech;type
+B-h2-demand;3577838.0;B-h2;h2;B-h2-demand-profile;B;demand;load
+BB-h2-demand;6067980.0;BB-h2;h2;BB-h2-demand-profile;BB;demand;load

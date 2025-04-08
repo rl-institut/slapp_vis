@@ -1,0 +1,6 @@
+from;B-electricity-liion_battery;B-h2-cavern;B-heat_central-storage;B-heat_decentral-storage;BB-electricity-liion_battery;BB-h2-cavern;BB-heat_central-storage;BB-heat_decentral-storage
+to;nan;nan;nan;nan;nan;nan;nan;nan
+type;storage_content;storage_content;storage_content;storage_content;storage_content;storage_content;storage_content;storage_content
+2017-01-01 00:00:00;0.0;0.0;0.0;3.111906484437209;0.0;0.0;0.0;5.966055523634218
+2017-01-01 01:00:00;0.0;0.0;10.826827366085007;0.0;0.0;0.0;232.71463725598235;0.0
+2017-01-01 02:00:00;0.0;0.0;10.825928739413621;0.0;204.91087562463744;0.0;460.5502878569067;0.0

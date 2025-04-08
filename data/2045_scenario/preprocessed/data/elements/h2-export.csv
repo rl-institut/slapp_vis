@@ -1,0 +1,3 @@
+name;bus;capacity;carrier;input_parameters;marginal_cost;region;tech;type
+B-h2-export;B-h2;1000000000;h2;"{""custom_attributes"": {""emission_factor"": 0.0}}";0.0;B;export;excess
+BB-h2-export;BB-h2;1000000000;h2;"{""custom_attributes"": {""emission_factor"": 0.0}}";0.0;BB;export;excess

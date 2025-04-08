@@ -1,0 +1,2 @@
+name;capacity_cost;carrier;expandable;from_bus;from_to_capacity;loss;region;tech;to_bus;to_from_capacity;type
+BB-B-electricity-transmission;;electricity;;BB-electricity;3000;0.012;BB_B;transmission;B-electricity;3000;link

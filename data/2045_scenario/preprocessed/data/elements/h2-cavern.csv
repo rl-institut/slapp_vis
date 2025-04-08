@@ -1,0 +1,3 @@
+name;bus;capacity;capacity_cost;capacity_potential;carrier;efficiency;expandable;input_parameters;loss_rate;marginal_cost;output_parameters;region;storage_capacity;storage_capacity_cost;storage_capacity_potential;tech;type
+B-h2-cavern;B-h2;0;6651.704030147646;0.0;h2;0.99;TRUE;"{""variable_costs"": 1E-7}";0.0;1.2e-05;{};B;0;72.96960004525874;0.0;cavern;storage
+BB-h2-cavern;BB-h2;0;6651.704030147646;inf;h2;0.99;TRUE;"{""variable_costs"": 1E-7}";0.0;1.2e-05;{};BB;0;72.96960004525874;inf;cavern;storage

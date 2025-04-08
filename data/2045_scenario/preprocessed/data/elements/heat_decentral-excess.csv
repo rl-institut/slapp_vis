@@ -1,0 +1,3 @@
+name;bus;capacity;carrier;input_parameters;marginal_cost;region;tech;type
+B-heat_decentral-excess;B-heat_decentral;1000000000;heat_decentral;{};0;B;excess;excess
+BB-heat_decentral-excess;BB-heat_decentral;1000000000;heat_decentral;{};0;BB;excess;excess

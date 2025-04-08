@@ -1,0 +1,3 @@
+name;bus;capacity;capacity_cost;capacity_potential;carrier;expandable;marginal_cost;output_parameters;profile;region;tech;type
+B-hydro-ror;B-electricity;0;192605.5353698496;0.0;hydro;True;1e-06;{};B-hydro-ror-profile;B;ror;volatile
+BB-hydro-ror;BB-electricity;0;192605.5353698496;5.5;hydro;True;1e-06;{};BB-hydro-ror-profile;BB;ror;volatile

@@ -1,0 +1,3 @@
+name;bus;capacity;capacity_cost;capacity_potential;carrier;expandable;marginal_cost;output_parameters;profile;region;tech;type
+B-solar-pv;B-electricity;0;41235.033167630216;9002.2;solar;True;0;{};B-solar-pv-profile;B;pv;volatile
+BB-solar-pv;BB-electricity;0;24520.36892368144;77000.0;solar;True;0;{};BB-solar-pv-profile;BB;pv;volatile

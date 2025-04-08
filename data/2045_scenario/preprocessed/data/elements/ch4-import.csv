@@ -1,0 +1,3 @@
+name;bus;capacity;carrier;marginal_cost;output_parameters;region;tech;type
+B-ch4-import;B-ch4;1000000000;ch4;46.6;"{""custom_attributes"": {""emission_factor"": 191.15}}";B;import;shortage
+BB-ch4-import;BB-ch4;1000000000;ch4;46.6;"{""custom_attributes"": {""emission_factor"": 191.15}}";BB;import;shortage

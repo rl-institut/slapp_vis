@@ -1,0 +1,3 @@
+name;amount;bus;carrier;profile;region;tech;type
+B-electricity-demand;8422659.0;B-electricity;electricity;B-electricity-demand-profile;B;demand;load
+BB-electricity-demand;19040783.0;BB-electricity;electricity;BB-electricity-demand-profile;BB;demand;load

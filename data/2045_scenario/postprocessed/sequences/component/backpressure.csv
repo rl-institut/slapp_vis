@@ -1,0 +1,6 @@
+from;B-ch4;B-ch4-bpchp;B-ch4-bpchp;BB-ch4;BB-ch4-bpchp;BB-ch4-bpchp;B-h2;B-h2-bpchp;B-h2-bpchp;BB-h2;BB-h2-bpchp;BB-h2-bpchp
+to;B-ch4-bpchp;B-electricity;B-heat_central;BB-ch4-bpchp;BB-electricity;BB-heat_central;B-h2-bpchp;B-electricity;B-heat_central;BB-h2-bpchp;BB-electricity;BB-heat_central
+type;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 01:00:00;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 02:00:00;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0

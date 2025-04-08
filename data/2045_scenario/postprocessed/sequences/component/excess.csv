@@ -1,0 +1,6 @@
+from;B-ch4;BB-ch4;B-ch4;BB-ch4;B-electricity;BB-electricity;B-electricity;BB-electricity;B-h2;BB-h2;B-h2;BB-h2;B-heat_central;BB-heat_central;B-heat_decentral;BB-heat_decentral
+to;B-ch4-excess;BB-ch4-excess;B-ch4-export;BB-ch4-export;B-electricity-curtailment;BB-electricity-curtailment;B-electricity-export;BB-electricity-export;B-h2-excess;BB-h2-excess;B-h2-export;BB-h2-export;B-heat_central-excess;BB-heat_central-excess;B-heat_decentral-excess;BB-heat_decentral-excess
+type;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 01:00:00;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 02:00:00;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0.0

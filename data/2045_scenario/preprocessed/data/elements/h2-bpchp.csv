@@ -1,0 +1,3 @@
+name;capacity;capacity_cost;carrier;carrier_cost;electric_efficiency;electricity_bus;expandable;fuel_bus;heat_bus;marginal_cost;region;tech;thermal_efficiency;type
+B-h2-bpchp;0;96413.15906510004;h2;0;0.4;B-electricity;TRUE;B-h2;B-heat_central;4.0;B;bpchp;0.42;backpressure
+BB-h2-bpchp;0;96413.15906510004;h2;0;0.4;BB-electricity;TRUE;BB-h2;BB-heat_central;4.0;BB;bpchp;0.42;backpressure

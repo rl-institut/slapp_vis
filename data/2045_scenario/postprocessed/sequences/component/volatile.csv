@@ -1,0 +1,6 @@
+from;B-hydro-ror;BB-hydro-ror;B-solar-pv;BB-solar-pv;B-wind-onshore;BB-wind-onshore
+to;B-electricity;BB-electricity;B-electricity;BB-electricity;B-electricity;BB-electricity
+type;flow;flow;flow;flow;flow;flow
+2017-01-01 00:00:00;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 01:00:00;0.0;0.0;0.0;0.0;0.0;0.0
+2017-01-01 02:00:00;0.0;0.0;0.0;0.0;0.0;0.0

@@ -1,0 +1,3 @@
+name;bus;capacity;capacity_cost;capacity_potential;carrier;expandable;marginal_cost;output_parameters;profile;region;tech;type
+B-wind-onshore;B-electricity;0;66856.89516831486;12.0;wind;True;1.22;{};B-wind-onshore-profile;B;onshore;volatile
+BB-wind-onshore;BB-electricity;0;66856.89516831486;34000.0;wind;True;1.22;{};BB-wind-onshore-profile;BB;onshore;volatile
