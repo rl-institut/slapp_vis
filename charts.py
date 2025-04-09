@@ -2,6 +2,9 @@
 import json
 import pathlib
 import string
+import shutil
+import pandas as pd
+
 
 import chart_data
 
@@ -35,9 +38,39 @@ def electricity_import():
     result = [import_df["var_value"].sum(), -export_df["var_value"].sum()]
     return template, result
 
+def optimized_capacities():
+    template = "optimized_capacities.html"
+    
+    file_list = chart_data.get_preprocessed_file_list()
+    file_names_list = [file_name[:-4] for file_name in file_list]
+
+    scalars_df = chart_data.get_postprocessed_data()
+
+    var_value_df = scalars_df[(scalars_df['var_name'].str.contains('invest_out|invest_in|invest')) &
+                        (scalars_df['name'].str.contains('|'.join(file_names_list)) ) 
+                       ]
+
+    capacity_potential_df = chart_data.get_preprocessed_file_df()
+
+    merged_df = pd.merge(var_value_df, capacity_potential_df, on='name', how='outer')
+    merged_df = merged_df[['name', 'var_value', 'capacity_potential']]
+
+    print(var_value_df[var_value_df['name']== 'B-ch4-boiler_large'])
+
+
+    merged_df.loc[merged_df['capacity_potential'] == float('inf'), 'capacity_potential'] = 0
+    merged_df.loc[merged_df['capacity_potential'] == float('-inf'), 'capacity_potential'] = 0
+
+    merged_df = merged_df[(merged_df['var_value'].notna()) & 
+                          (merged_df['capacity_potential'].notna() &
+                           merged_df['capacity_potential'] > 0)
+                          ]
+    return template, merged_df.to_dict(orient="records")
+
 
 
 if __name__ == "__main__":
-    _template, _data = electricity_import()
+    _template, _data = optimized_capacities()
+    shutil.copyfile(TEMPLATE_DIR / _template, DIST_DIR / _template)
     render_chart(_template, _data)
 
