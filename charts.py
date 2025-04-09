@@ -55,9 +55,6 @@ def optimized_capacities():
     merged_df = pd.merge(var_value_df, capacity_potential_df, on='name', how='outer')
     merged_df = merged_df[['name', 'var_value', 'capacity_potential']]
 
-    print(var_value_df[var_value_df['name']== 'B-ch4-boiler_large'])
-
-
     merged_df.loc[merged_df['capacity_potential'] == float('inf'), 'capacity_potential'] = 0
     merged_df.loc[merged_df['capacity_potential'] == float('-inf'), 'capacity_potential'] = 0
 
