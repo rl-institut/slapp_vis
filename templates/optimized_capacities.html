@@ -37,16 +37,20 @@
       },
       xAxis: {
         type: 'category',
-        data: data.map(item => item.name)
+        data: data.map(item => item.name),
+        axisLabel: {
+          interval: 0,
+          rotate: 15,
+        }
       },
       yAxis: [
         {
           type: 'value',
-          name: 'optimierte Leistung'
+          name: 'optimierte \n Leistung [MW]',
         },
         {
           type: 'value',
-          name: 'theoretisches Ausbaupotential'
+          name: 'theoretisches \n Ausbaupotential [MW]',
         }
       ],
       series: [
