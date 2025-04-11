@@ -3591,12 +3591,12 @@
                         "format": "default"
                     },
                     {
-                        "name": "BB-electricity-bev_charging-profile",
+                        "name": "B-electricity-bev_charging-profile",
                         "type": "number",
                         "format": "default"
                     },
                     {
-                        "name": "B-electricity-bev_charging-profile",
+                        "name": "BB-electricity-bev_charging-profile",
                         "type": "number",
                         "format": "default"
                     }
