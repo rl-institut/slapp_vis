@@ -30,6 +30,39 @@ def get_preprocessed_file_df():
         resultDf = pd.concat([resultDf, techDf], ignore_index=True)
 
     return resultDf
+
+def get_postprocessed_sequences_bus_time(): 
+    path = DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
+    file_list = [f for f in os.listdir(path) if f.endswith('.csv')]
+    
+    data = pd.Series()
+
+    for file_name in file_list:
+        df = pd.read_csv(path / file_name, sep=';')
+        for col_name in df.columns:
+            cell_name = df.iloc[0][col_name]
+            
+            if 'electricity-demand' in cell_name:
+                column_sum = df.loc[2:, col_name].astype(float).sum()
+
+                parts = file_name.split('-')
+                region = parts[0]
+
+                data[region] = column_sum    
+
+    return data
+
+def get_postprocessed_by_variable_flow(filename = "flow.csv"):
+    path = DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "sequences" / "by_variable" / filename
+    df = pd.read_csv(path, sep=';',skiprows=3, header=None, index_col=0)
+    return df
+
+
+
+
+
+   
+        
        
 
     

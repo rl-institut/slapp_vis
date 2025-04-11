@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src=" https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js "></script>
+</head>
+
+<body>
+  <div id="main" style="width: 600px;height:400px;"></div>
+
+  <script type="text/javascript">
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+
+    var data = $data;
+
+    var xAxisData = Object.keys(data['flow zeit 1']);
+
+    var series = [];
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        var seriesData = Object.values(data[key]);
+        series.push({
+          name: key,
+          type: 'line',
+          data: seriesData
+        });
+      }
+    }
+
+    var option = {
+      title: {
+        text: 'Interaktiver Zeitreihenplot',
+        left: 'center',
+        top: 'top'
+      },
+      legend: {
+        data: Object.keys(data),
+        left: 'center',
+        top: 'bottom'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999'
+          }
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: xAxisData
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: series
+    };
+
+    option && myChart.setOption(option);
+  </script>
+</body>
+
+</html>
