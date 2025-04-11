@@ -64,10 +64,97 @@ def optimized_capacities():
                           ]
     return template, merged_df.to_dict(orient="records")
 
+def generation_consumption_per_sector():
+    template = "generation_consumption_per_sector.html"
+    scalars = chart_data.get_postprocessed_data()
+
+    y1 = scalars[(scalars["var_name"] == "flow_out_electricity")]['var_value'].sum()
+    x1 = scalars[(scalars["var_name"] == "flow_in_electricity")]['var_value'].sum()
+
+   
+
+    y2 = scalars[(scalars["var_name"] == "flow_out_heat_low_decentral")]['var_value'].sum()
+    x2 = scalars[(scalars["var_name"] == "flow_in_heat_low_decentral")]['var_value'].sum()
+
+    y3 = scalars[(scalars["var_name"] == "flow_out_heat_low_central")]['var_value'].sum()
+    x3 = scalars[(scalars["var_name"] == "flow_in_heat_low_central")]['var_value'].sum()
+
+    y4 = scalars[(scalars["var_name"] == "flow_out_heat_high")]['var_value'].sum()
+    x4 = scalars[(scalars["var_name"] == "flow_in_heat_high")]['var_value'].sum()
+
+    data = {
+        "chart1-1": x1,
+        "chart1-2": y1 - x1,
+        "chart1-total": round(y1, 2),
+
+        "chart2-1": y2,
+        "chart2-2": x2 - y2,
+        "chart2-total": round(y2, 2),
+
+        "chart3-1": y3,
+        "chart3-2": x3 - y3,
+        "chart3-total": round(y3, 2),
+
+        "chart4-1": y4,
+        "chart4-2": x4 - y4,
+        "chart4-total": round(y4, 2),
+    }
+    return template, data
+
+def self_generation_imports():
+    template = "self_generation_power.html"
+    scalars = chart_data.get_postprocessed_data()
+    y1_df = scalars[(scalars['var_name'] == 'flow_out_electricity') & (~scalars['type'].isin(['shortage', 'storage']))]
+    y1 = y1_df['var_value'].sum()
+
+    y2_df = scalars[(scalars['var_name'] == 'flow_out_electricity') & (scalars['tech'] == 'import')]
+    y2 = y2_df['var_value'].sum()
+    
+    data = {
+        "y1": y1,
+        "y2": y2,
+        "x": round(y1 + y2, 2),
+    }
+    return template, data
+
+def supplied_hours():
+    template = "supplied_hours.html"
+    y1 = chart_data.get_postprocessed_sequences_bus_time()
+    y2 = 8760 - y1
+    x = y1 + y2
+
+    y1 = y1 / x * 100
+    y2 = y2 / x * 100
+
+    data = pd.DataFrame()
+    data['y1'] = y1.round(2)
+    data['y2'] = y2.round(2)
+
+    print(data.to_dict())
+
+    return template, data.to_dict()
+
+def interactive_time_series_plot():
+    template = "interactive_time_series_plot.html"
+    data_df = pd.DataFrame()
+    flow_df = chart_data.get_postprocessed_by_variable_flow("flow.csv")
+    storage_content_df = chart_data.get_postprocessed_by_variable_flow("storage_content.csv")
+
+    data_df['flow zeit 1'] = flow_df[1]
+    data_df['storage content zeit 1'] = flow_df[1]
+
+    data_df['flow zeit N'] = storage_content_df[3]
+    data_df['storage content zeit N'] = storage_content_df[3]
+
+
+    print(data_df.to_dict())
+    # 将生成的 DataFrame 转换为 JSON 格式
+    return template, data_df.to_dict()
 
 
 if __name__ == "__main__":
-    _template, _data = optimized_capacities()
-    shutil.copyfile(TEMPLATE_DIR / _template, DIST_DIR / _template)
+    _template, _data = interactive_time_series_plot()
+    flow = shutil.copyfile(TEMPLATE_DIR / _template, DIST_DIR / _template)
+    
     render_chart(_template, _data)
 

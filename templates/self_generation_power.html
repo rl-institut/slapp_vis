@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src=" https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js "></script>
+</head>
+
+<body>
+  <div id="main" style="width: 600px;height:400px;"></div>
+
+  <script type="text/javascript">
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+
+    var data = $data;
+
+    var option;
+
+    option = {
+      title: {
+        text: 'Eigenerzeugung/Stromimporte ',
+        subtext: 'Eigenerzeugung + Stromimporte = ' + data.x + 'GWh',
+        left: 'center',
+        top: 'top'
+      },
+      legend: {
+        left: 'center',
+        top: 'bottom'
+      },
+
+      series: [
+        {
+          type: 'pie',
+          data: [
+            { value: data.y1, name: 'Anteil Eigenerzeugung aus EE' },
+            { value: data.y2, name: 'Anteil Stromimport' },
+          ],
+          label: {
+            show: true,
+            position: 'outside',
+            formatter: function (params) {
+              return params.name + '\n' + params.percent + '%'
+            },
+            textStyle: {
+              fontSize: 12,
+            }
+          }
+        },
+
+      ]
+    }
+
+    option && myChart.setOption(option);
+  </script>
+</body>
+
+</html>
