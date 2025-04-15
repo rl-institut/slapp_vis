@@ -21,6 +21,28 @@ def render_chart(template: str, data: list[dict[str, float]]):
         f.write(html_rendered)
 
 
+def merge_technologies(technology):
+    if "wind" in technology:
+        return "wind"
+    if "import" in technology:
+        return "import"
+    if "pv" in technology:
+        return "electricity-pv"
+    if "heatpump" in technology:
+        return "electricity-heatpump"
+    if "storage" in technology and "electricity" in technology:
+        return "electricity-storage"
+    if "storage" in technology and "heat" in technology:
+        return "heat-storage"
+    if "bpchp" in technology and "h2" not in technology:
+        return "bpchp"
+    if "boiler" in technology and "h2" not in technology:
+        return "boiler"
+    if "h2-bpchp" in technology:
+        return "h2-bpchp"
+    return technology
+
+
 def total_electricity_per_technology():
     template = "total_electricity_per_technology.html"
     scalars = chart_data.get_postprocessed_data()
@@ -74,36 +96,32 @@ def generation_consumption_per_sector():
     template = "generation_consumption_per_sector.html"
     scalars = chart_data.get_postprocessed_data()
 
-    y1 = scalars[(scalars["var_name"] == "flow_out_electricity")]['var_value'].sum()
-    x1 = scalars[(scalars["var_name"] == "flow_in_electricity")]['var_value'].sum()
+    scalars["name"] = scalars["name"].apply(merge_technologies)
 
-   
+    y1 = scalars.loc[(scalars["var_name"] == "flow_out_electricity") & (scalars["var_value"] > 0), ["name", "var_value"]].groupby("name").sum()
+    x1 = int(scalars.loc[(scalars["var_name"] == "flow_in_electricity"), "var_value"].sum().sum() / 1000) * 1000
 
-    y2 = scalars[(scalars["var_name"] == "flow_out_heat_low_decentral")]['var_value'].sum()
-    x2 = scalars[(scalars["var_name"] == "flow_in_heat_low_decentral")]['var_value'].sum()
+    y2 = scalars.loc[(scalars["var_name"] == "flow_out_heat_low_decentral") & (scalars["var_value"] > 0), ["name", "var_value"]].groupby("name").sum()
+    x2 = int(scalars.loc[(scalars["var_name"] == "flow_in_heat_low_decentral"), "var_value"].sum().sum() / 1000) * 1000
 
-    y3 = scalars[(scalars["var_name"] == "flow_out_heat_low_central")]['var_value'].sum()
-    x3 = scalars[(scalars["var_name"] == "flow_in_heat_low_central")]['var_value'].sum()
+    y3 = scalars.loc[(scalars["var_name"] == "flow_out_heat_low_central") & (scalars["var_value"] > 0), ["name", "var_value"]].groupby("name").sum()
+    x3 = int(scalars.loc[(scalars["var_name"] == "flow_in_heat_low_central"), "var_value"].sum().sum() / 1000) * 1000
 
-    y4 = scalars[(scalars["var_name"] == "flow_out_heat_high")]['var_value'].sum()
-    x4 = scalars[(scalars["var_name"] == "flow_in_heat_high")]['var_value'].sum()
+    y4 = scalars.loc[(scalars["var_name"] == "flow_out_heat_high") & (scalars["var_value"] > 0), ["name", "var_value"]].groupby("name").sum()
+    x4 = int(scalars.loc[(scalars["var_name"] == "flow_in_heat_high"), "var_value"].sum().sum() / 1000) * 1000
 
     data = {
-        "chart1-1": x1,
-        "chart1-2": y1 - x1,
-        "chart1-total": round(y1, 2),
+        "chart1-1": (y1 / y1.sum() * 100).to_dict()["var_value"],
+        "chart1-total": x1,
 
-        "chart2-1": y2,
-        "chart2-2": x2 - y2,
-        "chart2-total": round(y2, 2),
+        "chart2-1": y2.to_dict()["var_value"],
+        "chart2-total": x2,
 
-        "chart3-1": y3,
-        "chart3-2": x3 - y3,
-        "chart3-total": round(y3, 2),
+        "chart3-1": y3.to_dict()["var_value"],
+        "chart3-total": x3,
 
-        "chart4-1": y4,
-        "chart4-2": x4 - y4,
-        "chart4-total": round(y4, 2),
+        "chart4-1": y4.to_dict()["var_value"],
+        "chart4-total": x4,
     }
     return template, data
 
@@ -157,7 +175,7 @@ def interactive_time_series_plot():
 if __name__ == "__main__":
     functions_list = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     for f_name, fct in functions_list:
-        if f_name == "render_chart":
+        if f_name in ("render_chart", "merge_technologies"):
             continue
         _template, _data = fct()
         render_chart(_template, _data)

@@ -14,15 +14,16 @@
 
     var data = $data
 
-    const getSeries = ({ data1, data2, name, center }) => {
+    const getSeries = ({ data1, name, center }) => {
+      let series = [];
+      for (const [k, v] of Object.entries(data1)) {
+          series.push({name: k, value: v});
+      }
       return {
         type: 'pie',
         radius: '20%',
         center,
-        data: [
-          { value: data1, name: name },
-          { value: data2, name: 'empty', itemStyle: { color: 'rgba(0, 0, 0, 0)' } },
-        ],
+        data: series,
         label: {
           show: true,
           position: 'outside',
@@ -66,25 +67,21 @@
       series: [
         getSeries({
           data1: data['chart1-1'],
-          data2: data['chart1-2'],
           name: 'electricity',
           center: ['25%', '30%']
         }),
         getSeries({
           data1: data['chart2-1'],
-          data2: data['chart2-2'],
           name: 'electricity1',
           center: ['75%', '30%']
         }),
         getSeries({
           data1: data['chart3-1'],
-          data2: data['chart3-2'],
           name: 'electricity2',
           center: ['25%', '75%']
         }),
         getSeries({
           data1: data['chart4-1'],
-          data2: data['chart4-2'],
           name: 'electricity3',
           center: ['75%', '75%']
         }),
