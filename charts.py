@@ -2,7 +2,8 @@
 import json
 import pathlib
 import string
-import shutil
+import inspect
+import sys
 import pandas as pd
 
 
@@ -33,7 +34,7 @@ def electricity_import():
     scalars = chart_data.get_postprocessed_data()
     import_df = scalars[(scalars["var_name"] == "flow_out_electricity") & (scalars["tech"] == "import") & (scalars["var_value"] > 0)][["name", "var_value"]]
     export_df = scalars[
-        (scalars["var_name"] == "flow_out_electricity") & (scalars["tech"] == "export") & (scalars["var_value"] > 0)][
+        (scalars["var_name"] == "flow_in_electricity") & (scalars["tech"] == "export") & (scalars["var_value"] > 0)][
         ["name", "var_value"]]
     result = [import_df["var_value"].sum(), -export_df["var_value"].sum()]
     return template, result
@@ -49,24 +50,24 @@ def optimized_capacities():
     var_value_df = scalars_df[(scalars_df['var_name'].str.contains('invest_out|invest_in')) &
                         (scalars_df['name'].str.contains('|'.join(file_names_list)) ) 
                        ]
-    
+
 
     capacity_potential_df = chart_data.get_preprocessed_file_df()
 
     merged_df = pd.merge(var_value_df, capacity_potential_df, on='name', how='outer')
     merged_df = merged_df[['name', 'var_value', 'capacity_potential', 'var_name']]
 
-    
+
 
 
     merged_df.loc[merged_df['capacity_potential'] == float('inf'), 'capacity_potential'] = 0
     merged_df.loc[merged_df['capacity_potential'] == float('-inf'), 'capacity_potential'] = 0
-    
+
     merged_df = merged_df[(merged_df['var_value'].notna()) & 
                           (merged_df['capacity_potential'].notna() &
                            merged_df['capacity_potential'] > 0)
                           ]
-    
+
     return template, merged_df.to_dict(orient="records")
 
 def generation_consumption_per_sector():
@@ -154,8 +155,10 @@ def interactive_time_series_plot():
 
 
 if __name__ == "__main__":
-    _template, _data = electricity_import()
-    flow = shutil.copyfile(TEMPLATE_DIR / _template, DIST_DIR / _template)
-    
-    render_chart(_template, _data)
+    functions_list = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
+    for f_name, fct in functions_list:
+        if f_name == "render_chart":
+            continue
+        _template, _data = fct()
+        render_chart(_template, _data)
 
