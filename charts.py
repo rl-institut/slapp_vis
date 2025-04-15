@@ -102,7 +102,7 @@ def optimized_capacities():
             > 0
         )
     ]
-
+    merged_df["name"] = merged_df["name"].apply(merge_technologies)
     return template, merged_df.to_dict(orient="records")
 
 
