@@ -228,18 +228,22 @@ def self_generation_imports():
 
 def supplied_hours():
     template = "supplied_hours.html"
-    y1 = chart_data.get_postprocessed_sequences_bus_time()
+    electricity = chart_data.get_electricity_sequences()
+    from_to_columns = [column.split("|") for column in electricity.columns.tolist()]
+    supplies = ["chp", "pv", "wind", "storage"]
+    supply_columns = ["|".join([from_node, to_node]) for from_node, to_node in from_to_columns if "electricity" in to_node and any(supply in from_node for supply in supplies)]
+    demand_columns = ["|".join([from_node, to_node]) for from_node, to_node in from_to_columns if "electricity" in from_node and "demand" in to_node]
+    self_supplied_hours = sum(electricity[supply_columns].sum(axis=1) > electricity[demand_columns].sum(axis=1))
+
+    y1 = self_supplied_hours
     y2 = 8760 - y1
     x = y1 + y2
 
     y1 = y1 / x * 100
     y2 = y2 / x * 100
 
-    data = pd.DataFrame()
-    data["y1"] = y1.round(2)
-    data["y2"] = y2.round(2)
-
-    return template, data.to_dict()
+    data = {"y1": {"a": round(y1, 2)}, "y2": {"b": round(y2, 2)}}
+    return template, data
 
 
 def interactive_time_series_plot():

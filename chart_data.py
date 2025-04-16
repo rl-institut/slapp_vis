@@ -41,26 +41,23 @@ def get_preprocessed_file_df():
     return resultDf
 
 
-def get_postprocessed_sequences_bus_time():
+def get_electricity_sequences():
     path = DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
-    file_list = [f for f in os.listdir(path) if f.endswith(".csv")]
+    file_list = [f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f]
 
-    data = pd.Series()
+    data = []
 
     for file_name in file_list:
-        df = pd.read_csv(path / file_name, sep=";")
-        for col_name in df.columns:
-            cell_name = df.iloc[0][col_name]
+        df = pd.read_csv(path / file_name, index_col=0, header=None, sep=";")
+        columns = df.iloc[:2].values
+        df = df.iloc[3:]
+        df.columns = list("|".join(item) for item in zip(columns[0], columns[1]))
+        # This gives me strange output ? Look at timeindex around 8700 and you will see artifacts
+        data.append(df)
 
-            if "electricity-demand" in cell_name:
-                column_sum = df.loc[2:, col_name].astype(float).sum()
-
-                parts = file_name.split("-")
-                region = parts[0]
-
-                data[region] = column_sum
-
-    return data
+    merged_df = pd.concat(data, axis=1)
+    merged_df = merged_df.astype(float)
+    return merged_df
 
 
 def get_postprocessed_by_variable_flow(filename="flow.csv"):
