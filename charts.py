@@ -44,7 +44,7 @@ def merge_technologies(technology):
 
 def total_electricity_per_technology(scenario: str):
     template = "total_electricity_per_technology.html"
-    scalars = chart_data.get_postprocessed_data()
+    scalars = chart_data.get_postprocessed_data(scenario)
     filtered = scalars[
         (scalars["var_name"] == "flow_out_electricity") & (scalars["var_value"] > 0)
     ][["name", "var_value"]]
@@ -55,7 +55,7 @@ def total_electricity_per_technology(scenario: str):
 
 def electricity_import(scenario: str):
     template = "electricity_import.html"
-    scalars = chart_data.get_postprocessed_data()
+    scalars = chart_data.get_postprocessed_data(scenario)
     import_df = scalars[
         (scalars["var_name"] == "flow_out_electricity")
         & (scalars["tech"] == "import")
@@ -76,7 +76,7 @@ def optimized_capacities(scenario: str):
     file_list = chart_data.get_preprocessed_file_list()
     file_names_list = [file_name[:-4] for file_name in file_list]
 
-    scalars_df = chart_data.get_postprocessed_data()
+    scalars_df = chart_data.get_postprocessed_data(scenario)
 
     var_value_df = scalars_df[
         (scalars_df["var_name"].str.contains("invest_out|invest_in"))
@@ -108,7 +108,7 @@ def optimized_capacities(scenario: str):
 
 def generation_consumption_per_sector(scenario: str):
     template = "generation_consumption_per_sector.html"
-    scalars = chart_data.get_postprocessed_data()
+    scalars = chart_data.get_postprocessed_data(scenario)
 
     scalars["name"] = scalars["name"].apply(merge_technologies)
 
@@ -206,7 +206,7 @@ def generation_consumption_per_sector(scenario: str):
 
 def self_generation_imports(scenario: str):
     template = "self_generation_power.html"
-    scalars = chart_data.get_postprocessed_data()
+    scalars = chart_data.get_postprocessed_data(scenario)
     y1_df = scalars[
         (scalars["var_name"] == "flow_out_electricity")
         & (~scalars["type"].isin(["shortage", "storage"]))

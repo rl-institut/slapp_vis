@@ -27,8 +27,8 @@ def get_postprocessed_data(scenario: str = "all"):
         )
     scenario_data = []
     for scenario in OEMOF_SCENARIOS_SINGLE:
-        scenario_data.append(pd.read_csv(DATA_DIR / scenario / OEMOF_SCENARIO / "postprocessed" / "scalars.csv"))
-    merged_df = pd.concat(scenario_data, axis=1)
+        scenario_data.append(pd.read_csv(DATA_DIR / scenario / OEMOF_SCENARIO / "postprocessed" / "scalars.csv", delimiter=";"))
+    merged_df = pd.concat(scenario_data, axis=0)
     return merged_df
 
 
