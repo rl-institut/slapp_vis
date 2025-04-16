@@ -5,12 +5,31 @@ import os
 
 DATA_DIR = pathlib.Path(__file__).parent / "data"
 OEMOF_SCENARIO = "2045_scenario"
+OEMOF_SCENARIOS_SINGLE = [
+    "r120640428428",
+    "r120640472472",
+    "r120670124124",
+    "r120670201201",
+]
 
 
-def get_postprocessed_data():
-    return pd.read_csv(
-        DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "scalars.csv", delimiter=";"
-    )
+def get_postprocessed_data(scenario: str = "all"):
+    """
+    Get postprocessed data for scenario.
+
+    Scenario can be one of "all" or "single". In case of "single" scenario,
+    postprocessed data from scenarios is merged together.
+    """
+    if scenario == "all":
+        return pd.read_csv(
+            DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "scalars.csv",
+            delimiter=";",
+        )
+    scenario_data = []
+    for scenario in OEMOF_SCENARIOS_SINGLE:
+        scenario_data.append(pd.read_csv(DATA_DIR / scenario / OEMOF_SCENARIO / "postprocessed" / "scalars.csv"))
+    merged_df = pd.concat(scenario_data, axis=1)
+    return merged_df
 
 
 def get_preprocessed_file_list():
@@ -33,7 +52,7 @@ def get_preprocessed_file_df():
 
     for file in file_list:
         file_path = (
-            DATA_DIR / OEMOF_SCENARIO / "preprocessed" / "data" / "elements" / file
+                DATA_DIR / OEMOF_SCENARIO / "preprocessed" / "data" / "elements" / file
         )
         techDf = pd.read_csv(file_path, delimiter=";")
         resultDf = pd.concat([resultDf, techDf], ignore_index=True)
@@ -41,14 +60,24 @@ def get_preprocessed_file_df():
     return resultDf
 
 
-def get_electricity_sequences():
-    path = DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
-    file_list = [f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f]
+def get_electricity_sequences(scenario: str = "all"):
+    file_list = []
+    if scenario == "all":
+        path = DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
+        file_list += [
+            path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f
+        ]
+    else:
+        for scenario in OEMOF_SCENARIOS_SINGLE:
+            path = DATA_DIR / scenario / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
+            file_list += [
+                path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f
+            ]
 
     data = []
 
-    for file_name in file_list:
-        df = pd.read_csv(path / file_name, index_col=0, header=None, sep=";")
+    for file in file_list:
+        df = pd.read_csv(file, index_col=0, header=None, sep=";")
         columns = df.iloc[:2].values
         df = df.iloc[3:]
         df.columns = list("|".join(item) for item in zip(columns[0], columns[1]))
@@ -62,12 +91,12 @@ def get_electricity_sequences():
 
 def get_postprocessed_by_variable_flow(filename="flow.csv"):
     path = (
-        DATA_DIR
-        / OEMOF_SCENARIO
-        / "postprocessed"
-        / "sequences"
-        / "by_variable"
-        / filename
+            DATA_DIR
+            / OEMOF_SCENARIO
+            / "postprocessed"
+            / "sequences"
+            / "by_variable"
+            / filename
     )
     df = pd.read_csv(path, sep=";", skiprows=3, header=None, index_col=0)
     return df

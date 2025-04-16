@@ -42,7 +42,7 @@ def merge_technologies(technology):
     return technology
 
 
-def total_electricity_per_technology():
+def total_electricity_per_technology(scenario: str):
     template = "total_electricity_per_technology.html"
     scalars = chart_data.get_postprocessed_data()
     filtered = scalars[
@@ -53,7 +53,7 @@ def total_electricity_per_technology():
     return template, filtered.to_dict(orient="records")
 
 
-def electricity_import():
+def electricity_import(scenario: str):
     template = "electricity_import.html"
     scalars = chart_data.get_postprocessed_data()
     import_df = scalars[
@@ -70,7 +70,7 @@ def electricity_import():
     return template, result
 
 
-def optimized_capacities():
+def optimized_capacities(scenario: str):
     template = "optimized_capacities.html"
 
     file_list = chart_data.get_preprocessed_file_list()
@@ -106,7 +106,7 @@ def optimized_capacities():
     return template, merged_df.to_dict(orient="records")
 
 
-def generation_consumption_per_sector():
+def generation_consumption_per_sector(scenario: str):
     template = "generation_consumption_per_sector.html"
     scalars = chart_data.get_postprocessed_data()
 
@@ -204,7 +204,7 @@ def generation_consumption_per_sector():
     return template, data
 
 
-def self_generation_imports():
+def self_generation_imports(scenario: str):
     template = "self_generation_power.html"
     scalars = chart_data.get_postprocessed_data()
     y1_df = scalars[
@@ -226,9 +226,9 @@ def self_generation_imports():
     return template, data
 
 
-def supplied_hours():
+def supplied_hours(scenario: str):
     template = "supplied_hours.html"
-    electricity = chart_data.get_electricity_sequences()
+    electricity = chart_data.get_electricity_sequences(scenario)
     from_to_columns = [column.split("|") for column in electricity.columns.tolist()]
     supplies = ["chp", "pv", "wind", "storage"]
     supply_columns = ["|".join([from_node, to_node]) for from_node, to_node in from_to_columns if "electricity" in to_node and any(supply in from_node for supply in supplies)]
@@ -246,7 +246,7 @@ def supplied_hours():
     return template, data
 
 
-def interactive_time_series_plot():
+def interactive_time_series_plot(scenario: str):
     template = "interactive_time_series_plot.html"
     data_df = pd.DataFrame()
     flow_df = chart_data.get_postprocessed_by_variable_flow("flow.csv")
@@ -263,9 +263,10 @@ def interactive_time_series_plot():
 
 
 if __name__ == "__main__":
+    SCENARIO = "single"
     functions_list = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     for f_name, fct in functions_list:
         if f_name in ("render_chart", "merge_technologies"):
             continue
-        _template, _data = fct()
+        _template, _data = fct(scenario=SCENARIO)
         render_chart(_template, _data)
