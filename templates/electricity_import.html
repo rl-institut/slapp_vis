@@ -6,43 +6,47 @@
 </head>
 
 <body>
-  <div id="main" style="width: 600px;height:400px;"></div>
+  <div id="electricityImportChart" style="width: 600px;height:400px;"></div>
 
   <script type="text/javascript">
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
 
     var data = $data;
 
-    var option;
+    function getOrCreateChart(div_id) {
+        const div = document.getElementById(div_id);
+        return echarts.init(div);
+    }
 
-    option = {
-      title: {
-        text: 'Stromimport vs. Export',
-        left: 'center',
-        top: 'top'
-      },
-      legend: {
-        left: 'center',
-        top: 'bottom'
-      },
-      xAxis: {
-        type: 'category',
-        data: ['Importe', "Exporte"]
-      },
-      yAxis: {
-        type: 'value',
-        name: 'GWh'
-      },
-      series: [
-        {
-          data: data,
-          type: 'bar'
-        }
-      ]
-    };
-
-    option && myChart.setOption(option);
+    function createElectricityImportChart(data) {
+        const chart = getOrCreateChart("electricityImportChart");
+        var option = {
+            title: {
+                text: 'Stromimport vs. Export',
+                left: 'center',
+                top: 'top'
+            },
+            legend: {
+                left: 'center',
+                top: 'bottom'
+            },
+            xAxis: {
+                type: 'category',
+                data: ['Importe', "Exporte"]
+            },
+            yAxis: {
+                type: 'value',
+                name: 'GWh'
+            },
+            series: [
+                {
+                    data: data,
+                    type: 'bar'
+                }
+            ]
+        };
+        chart.setOption(option);
+    }
+    createElectricityImportChart(data);
   </script>
 </body>
 

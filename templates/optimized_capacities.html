@@ -6,68 +6,74 @@
 </head>
 
 <body>
-  <div id="main" style="width: 600px;height:400px;"></div>
+  <div id="optimizedCapacitiesChart" style="width: 600px;height:400px;"></div>
 
   <script type="text/javascript">
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
 
     var data = $data;
 
-    var option;
-
-    option = {
-      title: {
-        text: 'Optimierte Kapazitäten',
-        left: 'center',
-        top: 'top'
-      },
-      legend: {
-        left: 'center',
-        top: 'bottom'
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          crossStyle: {
-            color: '#999'
-          }
-        }
-      },
-      xAxis: {
-        type: 'category',
-        data: data.map(item => item.name),
-        axisLabel: {
-          interval: 0,
-          rotate: 90,
-        }
-      },
-      yAxis: [
-        {
-          type: 'value',
-          name: 'optimierte \n Leistung [MW]',
-        },
-        {
-          type: 'value',
-          name: 'theoretisches \n Ausbaupotential [MW]',
-        }
-      ],
-      series: [
-        {
-          name: 'optimierte Leistung',
-          data: data.map(item => item.var_value === 0 ? item.capacity_potential * 0.5 : item.var_value),
-          type: 'bar'
-        },
-        {
-          name: 'theoretisches Ausbaupotential',
-          data: data.map(item => item.capacity_potential),
-          type: 'scatter'
-        }
-      ]
+    function getOrCreateChart(div_id) {
+        const div = document.getElementById(div_id);
+        return echarts.init(div);
     }
 
-    option && myChart.setOption(option);
+    function createOptimizedCapacitiesChart(data) {
+        const chart = getOrCreateChart("optimizedCapacitiesChart");
+
+        let option = {
+            title: {
+                text: 'Optimierte Kapazitäten',
+                left: 'center',
+                top: 'top'
+            },
+            legend: {
+                left: 'center',
+                top: 'bottom'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: data.map(item => item.name),
+                axisLabel: {
+                    interval: 0,
+                    rotate: 90,
+                }
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: 'optimierte \n Leistung [MW]',
+                },
+                {
+                    type: 'value',
+                    name: 'theoretisches \n Ausbaupotential [MW]',
+                }
+            ],
+            series: [
+                {
+                    name: 'optimierte Leistung',
+                    data: data.map(item => item.var_value === 0 ? item.capacity_potential * 0.5 : item.var_value),
+                    type: 'bar'
+                },
+                {
+                    name: 'theoretisches Ausbaupotential',
+                    data: data.map(item => item.capacity_potential),
+                    type: 'scatter'
+                }
+            ]
+        };
+
+        chart.setOption(option);
+    }
+    createOptimizedCapacitiesChart(data);
   </script>
 </body>
 

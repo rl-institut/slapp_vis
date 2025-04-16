@@ -6,90 +6,117 @@
 </head>
 
 <body>
-  <div id="main" style="width: 600px;height:400px;"></div>
+  <div id="generationConsumptionChart" style="width: 600px;height:400px;"></div>
 
   <script type="text/javascript">
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
 
     var data = $data
 
-    const getSeries = ({ data1, name, center }) => {
-      let series = [];
-      for (const [k, v] of Object.entries(data1)) {
-          series.push({name: k, value: v});
-      }
-      return {
-        type: 'pie',
-        radius: '20%',
-        center,
-        data: series,
-        label: {
-          show: true,
-          position: 'outside',
-          formatter: function (params) {
-            if (params.name !== 'empty') {
-              return params.percent + '%'
+    function getOrCreateChart(div_id) {
+        const div = document.getElementById(div_id);
+        return echarts.init(div);
+    }
+
+    function createGenerationConsumptionChart(data) {
+        const chart = getOrCreateChart("generationConsumptionChart");
+        const getSeries = ({data1, name, center}) => {
+            let series = [];
+            for (const [k, v] of Object.entries(data1)) {
+                series.push({name: k, value: v});
             }
-            return '';
-          },
-          textStyle: {
-            fontSize: 12,
-          }
+            return {
+                type: 'pie',
+                radius: '20%',
+                center,
+                data: series,
+                label: {
+                    show: true,
+                    position: 'outside',
+                    formatter: function (params) {
+                        if (params.name !== 'empty') {
+                            return params.percent + '%'
+                        }
+                        return '';
+                    },
+                    textStyle: {
+                        fontSize: 12,
+                    }
+                }
+            }
         }
-      }
+
+        const subTitleStyle = {
+            textStyle: {
+                fontSize: 12,
+                fontWeight: '400',
+                color: '#333'
+            }
+        }
+
+        const option = {
+            title: [
+                {
+                    text: 'Erzeugung vs Verbrauch je Sektor ',
+                    left: 'center',
+                    top: 'top'
+                },
+                {
+                    text: `flow_out_electricity von TechnologieX \n / Gesamtstrombedarf (` + data['chart1-total'] + 'GW)',
+                    left: '25%',
+                    top: '10%',
+                    textAlign: 'center', ...subTitleStyle
+                },
+                {
+                    text: `flow_out_heat_low_decentral von TechnologieX  \n / Gesamtwämrebedarf dezentral (` + data['chart2-total'] + 'GW)',
+                    left: '75%',
+                    top: '10%',
+                    textAlign: 'center', ...subTitleStyle
+                },
+                {
+                    text: `flow_out_heat_low_central von TechnologieX \n / Gesamtwämrebedarf zentral (` + data['chart3-total'] + 'GW)',
+                    left: '25%',
+                    top: '55%',
+                    textAlign: 'center', ...subTitleStyle
+                },
+                {
+                    text: `flow_out_heat_high von TechnologieX \n / Gesamtwämrebedarf heat_high (` + data['chart4-total'] + 'GW)',
+                    left: '75%',
+                    top: '55%',
+                    textAlign: 'center', ...subTitleStyle
+                },
+            ],
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+            series: [
+                getSeries({
+                    data1: data['chart1-1'],
+                    name: 'electricity',
+                    center: ['25%', '30%']
+                }),
+                getSeries({
+                    data1: data['chart2-1'],
+                    name: 'electricity1',
+                    center: ['75%', '30%']
+                }),
+                getSeries({
+                    data1: data['chart3-1'],
+                    name: 'electricity2',
+                    center: ['25%', '75%']
+                }),
+                getSeries({
+                    data1: data['chart4-1'],
+                    name: 'electricity3',
+                    center: ['75%', '75%']
+                }),
+
+            ]
+        };
+
+        chart.setOption(option);
     }
-
-    const subTitleStyle = {
-      textStyle: {
-        fontSize: 12,
-        fontWeight: '400',
-        color: '#333'
-      }
-    }
-
-    const option = {
-      title: [
-        {
-          text: 'Erzeugung vs Verbrauch je Sektor ',
-          left: 'center',
-          top: 'top'
-        },
-        { text: `flow_out_electricity von TechnologieX \n / Gesamtstrombedarf (` + data['chart1-total'] + 'GW)', left: '25%', top: '10%', textAlign: 'center', ...subTitleStyle },
-        { text: `flow_out_heat_low_decentral von TechnologieX  \n / Gesamtwämrebedarf dezentral (` + data['chart2-total'] + 'GW)', left: '75%', top: '10%', textAlign: 'center', ...subTitleStyle },
-        { text: `flow_out_heat_low_central von TechnologieX \n / Gesamtwämrebedarf zentral (` + data['chart3-total'] + 'GW)', left: '25%', top: '55%', textAlign: 'center', ...subTitleStyle },
-        { text: `flow_out_heat_high von TechnologieX \n / Gesamtwämrebedarf heat_high (` + data['chart4-total'] + 'GW)', left: '75%', top: '55%', textAlign: 'center', ...subTitleStyle },
-      ],
-      tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b}: {c} ({d}%)'
-      },
-      series: [
-        getSeries({
-          data1: data['chart1-1'],
-          name: 'electricity',
-          center: ['25%', '30%']
-        }),
-        getSeries({
-          data1: data['chart2-1'],
-          name: 'electricity1',
-          center: ['75%', '30%']
-        }),
-        getSeries({
-          data1: data['chart3-1'],
-          name: 'electricity2',
-          center: ['25%', '75%']
-        }),
-        getSeries({
-          data1: data['chart4-1'],
-          name: 'electricity3',
-          center: ['75%', '75%']
-        }),
-
-      ]
-    }
-
-    option && myChart.setOption(option);
+    createGenerationConsumptionChart(data);
   </script>
 </body>
 
