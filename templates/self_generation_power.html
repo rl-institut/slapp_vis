@@ -12,13 +12,12 @@
 
     var data = $data;
 
-    function getOrCreateChart(div_id) {
-        const div = document.getElementById(div_id);
+    function getOrCreateChart(div) {
         return echarts.init(div);
     }
 
     function createSelfGenerationPowerChart(data) {
-        const chart = getOrCreateChart("selfGenerationPowerChart");
+        const chart = getOrCreateChart(document.getElementById("selfGenerationPowerChart"));
 
         let option = {
             title: {

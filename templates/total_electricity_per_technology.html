@@ -10,13 +10,12 @@
 
     var data = $data;
 
-    function getOrCreateChart(div_id) {
-        const div = document.getElementById(div_id);
+    function getOrCreateChart(div) {
         return echarts.init(div);
     }
 
     function createTotalElectricityChart(data) {
-        const chart = getOrCreateChart("totalElectricityChart");
+        const chart = getOrCreateChart(document.getElementById("totalElectricityChart"));
 
         let option = {
             title: {
