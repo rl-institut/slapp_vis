@@ -9,6 +9,7 @@
   <script type="text/javascript">
 
     var data = $data;
+    var colors = $colors;
 
     function getOrCreateChart(div) {
         return echarts.init(div);
@@ -32,7 +33,7 @@
             },
             series: [
                 {
-                    name: 'Access From',
+                    name: 'Energy',
                     type: 'pie',
                     radius: '50%',
                     center: ['30%', '50%'],

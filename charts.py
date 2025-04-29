@@ -15,7 +15,7 @@ TEMPLATE_DIR = pathlib.Path(__file__).parent / "templates"
 def render_chart(template: str, data: list[dict[str, float]]):
     with (TEMPLATE_DIR / template).open("r", encoding="utf-8") as f:
         html_template = f.read()
-    html_rendered = string.Template(html_template).substitute(data=json.dumps(data))
+    html_rendered = string.Template(html_template).substitute(data=json.dumps(data), colors=json.dumps({"pv": "yellow"}))
     with (DIST_DIR / template).open("w", encoding="utf-8") as f:
         f.write(html_rendered)
 
