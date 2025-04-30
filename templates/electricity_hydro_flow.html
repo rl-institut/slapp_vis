@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js"></script>
+</head>
+<body>
+<div style="display:flex;">
+<div id="electricityChart" style="width: 600px;height:400px;"></div>
+<div id="hydroChart" style="width: 600px;height:400px;"></div>
+</div>
+  <script type="text/javascript">
+
+    var data = $data;
+    var hydroData = data.filter(d => d.carrier === "h2");
+    var electricityData = data.filter(d => d.carrier === "electricity");
+    var nodes = $nodes;
+
+    function getOrCreateChart(div) {
+        return echarts.init(div);
+    }
+
+    function createFlowChart(data, resource, chartID) {
+        console.log(
+          Array.from(new Set(data.flatMap(d => [d.source, d.target])))
+        );
+
+        const chart = getOrCreateChart(document.getElementById(chartID));
+        let values = data.map(d => d.value);
+        let minEnergy = Math.min(...values);
+        let maxEnergy = Math.max(...values);
+        function scaleLineWidth(value) {
+            let diff = maxEnergy - minEnergy;
+            return diff === 0 ? 4 : 1 + ((value - minEnergy) / diff) * 7;
+        }
+        let gradientColors = resource === "hydrogen" ?
+            [{ offset: 0, color: "#feb1b1" }, { offset: 1, color: "#c34747" }] :
+            [{ offset: 0, color: "#a2edbd" }, { offset: 1, color: "#20a54f" }];
+        const links  = data.map(d => ({
+              source: d.source,
+              target: d.target,
+              value:  d.value,
+              lineStyle: { width: scaleLineWidth(d.value) }
+            }));
+        let option = {
+            title: { text: data.title || "Flussdiagramm", left: "center" },
+            tooltip: {
+                trigger: "item",
+                formatter: function (params) {
+                    return params.dataType === "edge" ?
+                        `$${params.data.source} → $${params.data.target}: $${params.data.value} MWh` : params.name;
+                }
+            },
+            series: [{
+                type: "graph",
+                layout: "none",
+                force: { repulsion: 300, edgeLength: [50, 200] },
+                roam: true,
+                label: { show: true, position: "right", fontSize: 20 },
+                edgeSymbol: ["none", "arrow"],
+                edgeSymbolSize: 10,
+                lineStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, gradientColors),
+                    curveness: 0.2,
+                    opacity: 0.8
+                },
+                data: nodes,
+                links: links,
+                emphasis: { focus: "adjacency" }
+            }]
+        };
+        chart.setOption(option);
+        chart.resize();
+
+        console.log("nodes for", chartID, nodes);
+    }
+
+      createFlowChart(electricityData, "electricity", "electricityChart");
+      createFlowChart(hydroData, "hydrogen", "hydroChart");
+  </script>
+</body>
+</html>

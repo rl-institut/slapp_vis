@@ -12,6 +12,72 @@ OEMOF_SCENARIOS_SINGLE = [
     "r120670201201",
 ]
 
+REGION_NAME_MAP = {
+    "r120640428428": "Straußberg",
+    "r120640472472": "Grünheide",
+    "r120670201201": "Erkner",
+    "r120670124124": "Rüdersdorf",
+}
+
+NODES = [
+  {
+    "name": "Straußberg",
+    "x": 50,
+    "y": -50,
+    "itemStyle": {"color": "#798897"},
+    "symbolSize": 30
+  },
+  {
+    "name": "Rüdersdorf",
+    "x": 0,
+    "y": 0,
+    "itemStyle": {"color": "#798897"},
+    "symbolSize": 30
+  },
+  {
+    "name": "Grünheide",
+    "x": 50,
+    "y": 50,
+    "itemStyle": {"color": "#798897"},
+    "symbolSize": 30
+  },
+  {
+    "name": "Erkner",
+    "x": -10,
+    "y": 50,
+    "itemStyle": {"color": "#798897"},
+    "symbolSize": 30
+  },
+  {
+    "name": "Netz",
+    "x": 80,
+    "y": -25,
+    "itemStyle": {"color": "#000000"},
+    "symbolSize": 10
+  },
+  {
+    "name": "Netz ",
+    "x": 60,
+    "y": 75,
+    "itemStyle": {"color": "#000000"},
+    "symbolSize": 10
+  },
+  {
+    "name": "Netz  ",
+    "x": -20,
+    "y": -20,
+    "itemStyle": {"color": "#000000"},
+    "symbolSize": 10
+  },
+  {
+    "name": "Netz   ",
+    "x": -20,
+    "y": 75,
+    "itemStyle": {"color": "#000000"},
+    "symbolSize": 10
+  }
+]
+
 
 def get_postprocessed_data(scenario: str = "all"):
     """
