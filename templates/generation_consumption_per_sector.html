@@ -3,6 +3,7 @@
 
 <head>
   <script src=" https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js "></script>
+  <meta charset="UTF-8">
 </head>
 
 <body>
@@ -11,6 +12,7 @@
   <script type="text/javascript">
 
     var data = $data
+    var techMap = $techMap
 
     function getOrCreateChart(div) {
         return echarts.init(div);
@@ -18,15 +20,21 @@
 
     function createGenerationConsumptionChart(data) {
         const chart = getOrCreateChart(document.getElementById("generationConsumptionChart"));
-        const getSeries = ({data1, name, center}) => {
-            let series = [];
-            for (const [k, v] of Object.entries(data1)) {
-                series.push({name: k, value: v});
-            }
+        const getSeries = ({ data1, center, startAngle = 10 }) => {
+          const series = Object.entries(data1).map(([techKey, val]) => {
+            const mapEntry = techMap[techKey] || {};
+            return {
+              name:  mapEntry.name  || techKey,
+              value: val,
+              ...(mapEntry.color && { itemStyle: { color: mapEntry.color } })
+            };
+          });
             return {
                 type: 'pie',
                 radius: '20%',
                 center,
+                startAngle,
+                avoidLabelOverlap: true,
                 data: series,
                 label: {
                     show: true,

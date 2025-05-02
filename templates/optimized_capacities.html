@@ -3,6 +3,7 @@
 
 <head>
   <script src=" https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js "></script>
+    <meta charset="UTF-8">
 </head>
 
 <body>
@@ -11,15 +12,30 @@
   <script type="text/javascript">
 
     var data = $data;
+    var techMap = $techMap
+
+    const sortedMapKeys = Object.keys(techMap)
+      .sort((a, b) => b.length - a.length);
 
     function getOrCreateChart(div) {
-        return echarts.init(div);
+      return echarts.init(div);
     }
 
     function createOptimizedCapacitiesChart(data) {
         const chart = getOrCreateChart(document.getElementById("optimizedCapacitiesChart"));
 
+        const categories = data.map(item => {
+          const foundKey = sortedMapKeys.find(k => item.name.includes(k));
+          return foundKey
+            ? techMap[foundKey].name
+            : item.name;
+        });
+
         let option = {
+           grid: {
+              containLabel: true,
+              bottom: '8%'
+            },
             title: {
                 text: 'Optimierte Kapazitäten',
                 left: 'center',
@@ -27,7 +43,7 @@
             },
             legend: {
                 left: 'center',
-                top: 'bottom'
+                top: 'bottom',
             },
             tooltip: {
                 trigger: 'axis',
@@ -40,10 +56,17 @@
             },
             xAxis: {
                 type: 'category',
-                data: data.map(item => item.name),
+                data: categories,
                 axisLabel: {
                     interval: 0,
                     rotate: 90,
+                    margin: 8,
+                    formatter: function(value) {
+                      const maxLen = 12;
+                      return value.length > maxLen
+                        ? value.slice(0, maxLen) + '…'
+                        : value;
+                    }
                 }
             },
             yAxis: [
