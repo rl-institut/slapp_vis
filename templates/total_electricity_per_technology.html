@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <script src=" https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js "></script>
+    <meta charset="UTF-8">
 </head>
 <body>
   <div id="totalElectricityChart" style="width: 600px;height:400px;"></div>
@@ -9,7 +10,19 @@
   <script type="text/javascript">
 
     var data = $data;
-    var colors = $colors;
+    var techMap = $techMap;
+
+    const styledData = data.map(item => {
+      const mapEntry = techMap[item.name];
+      if (mapEntry) {
+        return {
+          value: item.value,
+          name:  mapEntry.name,
+          itemStyle: { color: mapEntry.color }
+        };
+      }
+      return item;
+    });
 
     function getOrCreateChart(div) {
         return echarts.init(div);
@@ -29,7 +42,7 @@
             legend: {
                 orient: 'vertical',
                 left: 'right',
-                top: 'bottom',
+                bottom: '-5%',
             },
             series: [
                 {
@@ -37,7 +50,7 @@
                     type: 'pie',
                     radius: '50%',
                     center: ['30%', '50%'],
-                    data: data,
+                    data: styledData,
                     emphasis: {
                         itemStyle: {
                             shadowBlur: 10,
