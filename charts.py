@@ -26,7 +26,7 @@ def render_chart(template: str, data: list[dict[str, float]]):
 
 def merge_technologies(technology):
     if "wind" in technology:
-        return "wind"
+        return "electricity-wind"
     if "import" in technology:
         return "import"
     if "pv" in technology:
