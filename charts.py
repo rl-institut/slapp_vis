@@ -15,7 +15,7 @@ TEMPLATE_DIR = pathlib.Path(__file__).parent / "templates"
 def render_chart(template: str, data: list[dict[str, float]]):
     with (TEMPLATE_DIR / template).open("r", encoding="utf-8") as f:
         html_template = f.read()
-    html_rendered = string.Template(html_template).substitute(data=json.dumps(data), colors=json.dumps({"pv": "yellow"}))
+    html_rendered = string.Template(html_template).substitute(data=json.dumps(data), colors=json.dumps({"pv": "yellow"}), nodes=json.dumps(chart_data.NODES))
     with (DIST_DIR / template).open("w", encoding="utf-8") as f:
         f.write(html_rendered)
 
@@ -40,6 +40,63 @@ def merge_technologies(technology):
     if "h2-bpchp" in technology:
         return "h2-bpchp"
     return technology
+
+def electricity_hydro_flow(scenario: str):
+    template = "electricity_hydro_flow.html"
+    scalars = chart_data.get_postprocessed_data(scenario)
+    h2_elec_df = None
+    if scenario == "all":
+        hydro_df = scalars[
+            (scalars["var_name"] == "flow_in_h2_from_bus") &
+            (scalars["var_value"] >= 0)
+        ][["name", "carrier", "region", "tech", "var_value"]]
+        hydro_df = hydro_df.rename(columns={"var_value": "value"})
+
+        elec_df = scalars[
+            (scalars["var_name"] == "flow_in_electricity_from_bus") &
+            (scalars["var_value"] > 0)
+        ][["name", "carrier", "region", "tech", "var_value"]]
+        elec_df = elec_df.rename(columns={"var_value": "value"})
+        h2_elec_df = pd.concat([hydro_df, elec_df], ignore_index=True)
+
+        h2_elec_df["region"] = h2_elec_df["region"].astype(str)
+        split_cols = h2_elec_df["region"].str.split('_', n=1, expand=True)
+        h2_elec_df["source"] = split_cols.iloc[:, 0]
+        h2_elec_df["target"] = split_cols.iloc[:, 1] if split_cols.shape[1] > 1 else pd.NA
+        h2_elec_df["target"] = h2_elec_df["target"].map(chart_data.REGION_NAME_MAP).fillna(h2_elec_df["target"])
+        h2_elec_df["source"] = h2_elec_df["source"].map(chart_data.REGION_NAME_MAP).fillna(h2_elec_df["source"])
+
+    export_df = scalars[
+        (scalars["tech"] == "export") &
+        (scalars["var_value"] >= 0)
+        ][["name", "carrier", "region", "tech", "var_value"]]
+    export_df = export_df.rename(columns={"var_value": "value"})
+    import_df = scalars[
+        (scalars["tech"] == "import") & (scalars["var_name"] == "flow_out_electricity") &
+        (scalars["var_value"] >= 0)
+        ][["name", "carrier", "region", "tech", "var_value"]]
+    import_df = import_df.rename(columns={"var_value": "value"})
+
+    for df in (import_df, export_df):
+        df["region_name"] = df["region"].map(chart_data.REGION_NAME_MAP).fillna(df["region"])
+    regions = sorted(chart_data.REGION_NAME_MAP.keys())
+    net_labels = {
+        reg: f"Netz{' ' * idx}"
+        for idx, reg in enumerate(regions)
+    }
+    for df in (import_df, export_df):
+        df["net_label"] = df["region"].map(net_labels)
+
+    import_df["source"] = import_df["net_label"]
+    import_df["target"] = import_df["region_name"]
+
+    export_df["source"] = export_df["region_name"]
+    export_df["target"] = export_df["net_label"]
+    combined_df = pd.concat([import_df, export_df], ignore_index=True)
+    if h2_elec_df is not None and not h2_elec_df.empty:
+        combined_df = pd.concat([h2_elec_df, combined_df], ignore_index=True)
+    data_records = combined_df.to_dict(orient="records")
+    return template, data_records
 
 
 def total_electricity_per_technology(scenario: str):
