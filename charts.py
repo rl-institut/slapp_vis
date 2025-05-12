@@ -95,6 +95,7 @@ def electricity_hydro_flow(scenario: str):
     combined_df = pd.concat([import_df, export_df], ignore_index=True)
     if h2_elec_df is not None and not h2_elec_df.empty:
         combined_df = pd.concat([h2_elec_df, combined_df], ignore_index=True)
+    combined_df = combined_df.round()
     data_records = combined_df.to_dict(orient="records")
     return template, data_records
 
