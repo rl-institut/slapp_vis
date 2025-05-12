@@ -43,7 +43,6 @@ def merge_technologies(technology):
 
 def electricity_hydro_flow(scenario: str):
     template = "electricity_hydro_flow.html"
-    scenario = "all"
     scalars = chart_data.get_postprocessed_data(scenario)
     h2_elec_df = None
     if scenario == "all":
@@ -58,8 +57,6 @@ def electricity_hydro_flow(scenario: str):
             (scalars["var_value"] > 0)
         ][["name", "carrier", "region", "tech", "var_value"]]
         elec_df = elec_df.rename(columns={"var_value": "value"})
-        elec_df["value"] = elec_df["value"]
-
         h2_elec_df = pd.concat([hydro_df, elec_df], ignore_index=True)
 
         h2_elec_df["region"] = h2_elec_df["region"].astype(str)
