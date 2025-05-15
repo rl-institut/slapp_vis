@@ -25,6 +25,8 @@
     }
 
     function checkIfExists(data, resource, chartID) {
+        if (resource == "hydrogen") {resource = "Wasserstoff";}
+        else {resource = "Strom";}
       if (!data || data.length === 0) {
           const chartDiv = document.getElementById(chartID);
           const wrapper = chartDiv.parentNode;
@@ -35,7 +37,6 @@
           msg.style.fontSize = "1.1em";
           msg.style.color = "#555";
           wrapper.insertBefore(msg, chartDiv);
-          return false;
       }
       return true;
     }
