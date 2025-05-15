@@ -6,8 +6,12 @@
 </head>
 <body>
 <div style="display:flex;">
-<div id="electricityChart" style="width: 600px;height:400px;"></div>
-<div id="hydroChart" style="width: 600px;height:400px;"></div>
+    <div class="chart-container">
+        <div id="electricityChart" style="width: 600px;height:400px;"></div>
+    </div>
+    <div class="chart-container">
+        <div id="hydroChart" style="width: 600px;height:400px;"></div>
+    </div>
 </div>
   <script type="text/javascript">
 
@@ -20,10 +24,26 @@
         return echarts.init(div);
     }
 
+    function checkIfExists(data, resource, chartID) {
+        if (resource == "hydrogen") {resource = "Wasserstoff";}
+        else {resource = "Strom";}
+      if (!data || data.length === 0) {
+          const chartDiv = document.getElementById(chartID);
+          const wrapper = chartDiv.parentNode;
+          const msg = document.createElement("div");
+          msg.textContent = "Aktuell gibt es keine Daten für " + resource + ".";
+          msg.style.textAlign = "center";
+          msg.style.padding = "1em";
+          msg.style.fontSize = "1.1em";
+          msg.style.color = "#555";
+          wrapper.insertBefore(msg, chartDiv);
+      }
+      return true;
+    }
+
+
     function createFlowChart(data, resource, chartID) {
-        console.log(
-          Array.from(new Set(data.flatMap(d => [d.source, d.target])))
-        );
+        if (!checkIfExists(data, resource, chartID)) return;
 
         const chart = getOrCreateChart(document.getElementById(chartID));
         let values = data.map(d => d.value);
@@ -71,8 +91,6 @@
         };
         chart.setOption(option);
         chart.resize();
-
-        console.log("nodes for", chartID, nodes);
     }
 
       createFlowChart(electricityData, "electricity", "electricityChart");

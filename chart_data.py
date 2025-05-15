@@ -13,10 +13,10 @@ OEMOF_SCENARIOS_SINGLE = [
 ]
 
 REGION_NAME_MAP = {
-    "r120640428428": "Straußberg",
-    "r120640472472": "Grünheide",
-    "r120670201201": "Erkner",
-    "r120670124124": "Rüdersdorf",
+    "r120640428428": "Rüdersdorf",
+    "r120640472472": "Straußberg",
+    "r120670201201": "Grünheide",
+    "r120670124124": "Erkner",
 }
 
 NODES = [
@@ -49,28 +49,28 @@ NODES = [
     "symbolSize": 30
   },
   {
-    "name": "Netz",
+    "name": "Netz ",
     "x": 80,
     "y": -25,
     "itemStyle": {"color": "#000000"},
     "symbolSize": 10
   },
   {
-    "name": "Netz ",
+    "name": "Netz   ",
     "x": 60,
     "y": 75,
     "itemStyle": {"color": "#000000"},
     "symbolSize": 10
   },
   {
-    "name": "Netz  ",
+    "name": "Netz",
     "x": -20,
     "y": -20,
     "itemStyle": {"color": "#000000"},
     "symbolSize": 10
   },
   {
-    "name": "Netz   ",
+    "name": "Netz  ",
     "x": -20,
     "y": 75,
     "itemStyle": {"color": "#000000"},

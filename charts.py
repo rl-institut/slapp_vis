@@ -48,7 +48,7 @@ def electricity_hydro_flow(scenario: str):
     if scenario == "all":
         hydro_df = scalars[
             (scalars["var_name"] == "flow_in_h2_from_bus") &
-            (scalars["var_value"] >= 0)
+            (scalars["var_value"] > 0)
         ][["name", "carrier", "region", "tech", "var_value"]]
         hydro_df = hydro_df.rename(columns={"var_value": "value"})
 
@@ -68,12 +68,12 @@ def electricity_hydro_flow(scenario: str):
 
     export_df = scalars[
         (scalars["tech"] == "export") &
-        (scalars["var_value"] >= 0)
+        (scalars["var_value"] > 0)
         ][["name", "carrier", "region", "tech", "var_value"]]
     export_df = export_df.rename(columns={"var_value": "value"})
     import_df = scalars[
         (scalars["tech"] == "import") & (scalars["var_name"] == "flow_out_electricity") &
-        (scalars["var_value"] >= 0)
+        (scalars["var_value"] > 0)
         ][["name", "carrier", "region", "tech", "var_value"]]
     import_df = import_df.rename(columns={"var_value": "value"})
 
