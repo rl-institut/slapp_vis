@@ -4,25 +4,29 @@ import string
 import inspect
 import sys
 import pandas as pd
+import os
 
 
 import chart_data
 
 DIST_DIR = pathlib.Path(__file__).parent / "dist"
 TEMPLATE_DIR = pathlib.Path(__file__).parent / "templates"
+MAPPING_FILE  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'technologies.json')
 
+with open(MAPPING_FILE, encoding='utf-8') as f:
+    TECH_MAP = json.load(f)
 
 def render_chart(template: str, data: list[dict[str, float]]):
     with (TEMPLATE_DIR / template).open("r", encoding="utf-8") as f:
         html_template = f.read()
-    html_rendered = string.Template(html_template).substitute(data=json.dumps(data), colors=json.dumps({"pv": "yellow"}), nodes=json.dumps(chart_data.NODES))
+    html_rendered = string.Template(html_template).substitute(data=json.dumps(data), nodes=json.dumps(chart_data.NODES), techMap=json.dumps(TECH_MAP))
     with (DIST_DIR / template).open("w", encoding="utf-8") as f:
         f.write(html_rendered)
 
 
 def merge_technologies(technology):
     if "wind" in technology:
-        return "wind"
+        return "electricity-wind"
     if "import" in technology:
         return "import"
     if "pv" in technology:
@@ -326,7 +330,8 @@ if __name__ == "__main__":
     SCENARIO = "single"
     functions_list = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     for f_name, fct in functions_list:
-        if f_name in ("render_chart", "merge_technologies"):
+        if f_name in ("render_chart", "merge_technologies", "get_technologies"):
             continue
         _template, _data = fct(scenario=SCENARIO)
         render_chart(_template, _data)
+
