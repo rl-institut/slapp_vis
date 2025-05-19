@@ -20,6 +20,7 @@
         const chart = getOrCreateChart(document.getElementById("selfGenerationPowerChart"));
 
         let option = {
+            color: ['#91cc75','#5470c6'],
             title: {
                 text: 'Eigenerzeugung/Stromimporte ',
                 subtext: 'Eigenerzeugung + Stromimporte = ' + data.x + 'GWh',
@@ -46,7 +47,7 @@
                         },
                         textStyle: {
                             fontSize: 12,
-                        }
+                        },
                     }
                 },
 

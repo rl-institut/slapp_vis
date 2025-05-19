@@ -5,7 +5,7 @@ With uv:
 ```shell
 uv venv .venv
 source ./.venv/bin/activate
-uv snyc
+uv sync
 ```
 
 In order to compile chart HTMLs:
