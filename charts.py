@@ -327,7 +327,7 @@ def interactive_time_series_plot(scenario: str):
 
 
 if __name__ == "__main__":
-    SCENARIO = "single"
+    SCENARIO = "r120640428428"
     functions_list = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     for f_name, fct in functions_list:
         if f_name in ("render_chart", "merge_technologies", "get_technologies"):
