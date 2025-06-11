@@ -68,25 +68,25 @@
                     top: 'top'
                 },
                 {
-                    text: `flow_out_electricity von TechnologieX \n / Gesamtstrombedarf (` + data['chart1-total'] + 'GW)',
+                    text: `Gesamtstrombedarf (` + data['chart1-total'] + 'GWh)',
                     left: '25%',
                     top: '10%',
                     textAlign: 'center', ...subTitleStyle
                 },
                 {
-                    text: `flow_out_heat_low_decentral von TechnologieX  \n / Gesamtwämrebedarf dezentral (` + data['chart2-total'] + 'GW)',
+                    text: `Gesamtwärmebedarf dezentral (` + data['chart2-total'] + 'GWh)',
                     left: '75%',
                     top: '10%',
                     textAlign: 'center', ...subTitleStyle
                 },
                 {
-                    text: `flow_out_heat_low_central von TechnologieX \n / Gesamtwämrebedarf zentral (` + data['chart3-total'] + 'GW)',
+                    text: `Gesamtwärmebedarf zentral (` + data['chart3-total'] + 'GWh)',
                     left: '25%',
                     top: '55%',
                     textAlign: 'center', ...subTitleStyle
                 },
                 {
-                    text: `flow_out_heat_high von TechnologieX \n / Gesamtwämrebedarf heat_high (` + data['chart4-total'] + 'GW)',
+                    text: `Gesamtwärmebedarf heat_high (` + data['chart4-total'] + 'GWh)',
                     left: '75%',
                     top: '55%',
                     textAlign: 'center', ...subTitleStyle
@@ -94,7 +94,7 @@
             ],
             tooltip: {
                 trigger: 'item',
-                formatter: '{a} <br/>{b}: {c} ({d}%)'
+                formatter: '{b}: {c} ({d}%)'
             },
             series: [
                 getSeries({

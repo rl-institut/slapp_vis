@@ -72,16 +72,22 @@
                 {
                     type: 'value',
                     name: 'optimierte \n Leistung [MW]',
+                    nameTextStyle: {
+                      align: "left"
+                    }
                 },
                 {
                     type: 'value',
                     name: 'theoretisches \n Ausbaupotential [MW]',
+                    nameTextStyle: {
+                      align: "right"
+                    }
                 }
             ],
             series: [
                 {
                     name: 'optimierte Leistung',
-                    data: data.map(item => item.var_value === 0 ? item.capacity_potential * 0.5 : item.var_value),
+                    data: data.map(item => item.var_value === 0 ? null : item.var_value),
                     type: 'bar'
                 },
                 {
