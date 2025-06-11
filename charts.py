@@ -4,6 +4,7 @@ import string
 import inspect
 import sys
 import pandas as pd
+import numpy as np
 import os
 
 
@@ -100,6 +101,8 @@ def electricity_hydro_flow(scenario: str):
     if h2_elec_df is not None and not h2_elec_df.empty:
         combined_df = pd.concat([h2_elec_df, combined_df], ignore_index=True)
     combined_df = combined_df.round()
+    # Convert NaN to None as NaN cannot be converted to JSON
+    combined_df = combined_df.map(lambda x: None if x is np.nan else x)
     data_records = combined_df.to_dict(orient="records")
     return template, data_records
 
@@ -327,7 +330,7 @@ def interactive_time_series_plot(scenario: str):
 
 
 if __name__ == "__main__":
-    SCENARIO = "r120640428428"
+    SCENARIO = "all"
     functions_list = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     for f_name, fct in functions_list:
         if f_name in ("render_chart", "merge_technologies", "get_technologies"):
