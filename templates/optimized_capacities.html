@@ -14,15 +14,14 @@
     var data = $data;
     var techMap = $techMap
 
-    const sortedMapKeys = Object.keys(techMap)
-      .sort((a, b) => b.length - a.length);
-
     function getOrCreateChart(div) {
       return echarts.init(div);
     }
 
     function createOptimizedCapacitiesChart(data) {
         const chart = getOrCreateChart(document.getElementById("optimizedCapacitiesChart"));
+
+        const sortedMapKeys = Object.keys(techMap).sort((a, b) => b.length - a.length);
 
         const categories = data.map(item => {
           const foundKey = sortedMapKeys.find(k => item.name.includes(k));

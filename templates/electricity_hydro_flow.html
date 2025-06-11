@@ -24,26 +24,20 @@
         return echarts.init(div);
     }
 
-    function checkIfExists(data, resource, chartID) {
-        if (resource == "hydrogen") {resource = "Wasserstoff";}
-        else {resource = "Strom";}
-      if (!data || data.length === 0) {
+    function createFlowChart(data, resource, chartID) {
+        if (!data || data.length === 0) {
+          const resource_de = resource === "hydrogen" ? "Wasserstoff" : "Strom";
           const chartDiv = document.getElementById(chartID);
           const wrapper = chartDiv.parentNode;
           const msg = document.createElement("div");
-          msg.textContent = "Aktuell gibt es keine Daten für " + resource + ".";
+          msg.textContent = "Aktuell gibt es keine Daten für " + resource_de + ".";
           msg.style.textAlign = "center";
           msg.style.padding = "1em";
           msg.style.fontSize = "1.1em";
           msg.style.color = "#555";
           wrapper.insertBefore(msg, chartDiv);
-      }
-      return true;
-    }
-
-
-    function createFlowChart(data, resource, chartID) {
-        if (!checkIfExists(data, resource, chartID)) return;
+          return;
+        }
 
         const chart = getOrCreateChart(document.getElementById(chartID));
         let values = data.map(d => d.value);

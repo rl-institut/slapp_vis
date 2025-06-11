@@ -12,24 +12,24 @@
     var data = $data;
     var techMap = $techMap;
 
-    const styledData = data.map(item => {
-      const mapEntry = techMap[item.name];
-      if (mapEntry) {
-        return {
-          value: item.value,
-          name:  mapEntry.name,
-          itemStyle: { color: mapEntry.color }
-        };
-      }
-      return item;
-    });
-
     function getOrCreateChart(div) {
         return echarts.init(div);
     }
 
     function createTotalElectricityChart(data) {
         const chart = getOrCreateChart(document.getElementById("totalElectricityChart"));
+
+        const styledData = data.map(item => {
+          const mapEntry = techMap[item.name];
+          if (mapEntry) {
+            return {
+              value: item.value,
+              name:  mapEntry.name,
+              itemStyle: { color: mapEntry.color }
+            };
+          }
+          return item;
+        });
 
         let option = {
             title: {
