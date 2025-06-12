@@ -134,15 +134,14 @@ def get_electricity_sequences(scenario: str = "all"):
     file_list = []
     if scenario == "all":
         path = DATA_DIR / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
-        file_list += [
-            path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f
-        ]
-    else:
+        file_list += [path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f]
+    elif scenario == "single":
         for scenario in OEMOF_SCENARIOS_SINGLE:
             path = DATA_DIR / scenario / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
-            file_list += [
-                path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f
-            ]
+            file_list += [path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f]
+    else:
+        path = DATA_DIR / scenario / OEMOF_SCENARIO / "postprocessed" / "sequences" / "bus"
+        file_list += [path / f for f in os.listdir(path) if f.endswith(".csv") and "electricity" in f]
 
     data = []
 
